@@ -1,6 +1,7 @@
 package com.example.codescannergostyle.ui.qrscanner;
 
 import android.Manifest;
+import android.app.Notification;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.example.codescannergostyle.CouponNotification;
 import com.example.codescannergostyle.database.*;
 import com.example.codescannergostyle.util.*;
 import com.example.codescannergostyle.NavActivity;
@@ -58,8 +60,7 @@ public class ScannerFragment extends Fragment {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getActivity().checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                mPermissionGranted = false;/*
-                requestPermissions(new String[] {Manifest.permission.CAMERA}, RC_PERMISSION);*/
+                mPermissionGranted = false;
             } else {
                 mPermissionGranted = true;
             }
@@ -130,18 +131,26 @@ public class ScannerFragment extends Fragment {
                             try {
                                 JSONObject couponObject = new JSONObject(response);
                                 Coupon coupon = new Coupon(couponObject);
-                                //Toast.makeText(getContext(), coupon.toString(), Toast.LENGTH_LONG).show();
+
 
                                 Coupon couponTmp = couponsDAO.getById(coupon.getID());
                                 if(couponTmp == null){
                                     if(couponInvalide(coupon)){
-                                        Toast.makeText(getContext(), "Le coupon scanné est expiré", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Le coupon scanné est expiré", Toast.LENGTH_LONG).show();
                                         getParentFragmentManager().popBackStack();
                                         return;
                                     }
                                     couponsDAO.insertAll(coupon);
                                     ((NavActivity)getActivity()).refreshCoupons();
                                     Toast.makeText(getContext(), "Le coupon a bien été enregistré", Toast.LENGTH_LONG).show();
+
+                                    CouponNotification couponNotification = new CouponNotification(getContext());
+
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                    Date strDate = sdf.parse(coupon.getDate_to());
+
+                                    Notification notif = couponNotification.getNotification(coupon);
+                                    couponNotification.scheduleNotification(notif, strDate);
                                 }else{
                                     Toast.makeText(getContext(), "Le coupon a déjà été scanné", Toast.LENGTH_LONG).show();
                                 }

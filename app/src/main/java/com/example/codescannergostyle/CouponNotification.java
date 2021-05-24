@@ -53,17 +53,20 @@ public class CouponNotification extends Notification {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context. ALARM_SERVICE ) ;
         assert alarmManager != null;
 
+        int m10 = 600 * 1000;
         int h1 = 3600 * 1000;
         int h6 = h1 *6;
         int h12 = h1 * 12;
         int h24 = h1 *24;
 
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-1000, pendingIntent);
+        //TestAlarmNotification
 
-        /*alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h1, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h6, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h12, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h24, pendingIntent) ;*/
+        alarmManager.set(AlarmManager.RTC_WAKEUP , date.getTime()-m10, pendingIntent);
+
+        alarmManager.set(AlarmManager. RTC_WAKEUP , date.getTime()-h1, pendingIntent) ;
+        alarmManager.set(AlarmManager. RTC_WAKEUP , date.getTime()-h6, pendingIntent) ;
+        alarmManager.set(AlarmManager. RTC_WAKEUP , date.getTime()-h12, pendingIntent) ;
+        alarmManager.set(AlarmManager. RTC_WAKEUP , date.getTime()-h24, pendingIntent) ;
     }
     public Notification getNotification (Coupon coupon) {
         Intent intent = new Intent(context, SplashScreen.class);

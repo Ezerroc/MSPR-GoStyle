@@ -60,7 +60,6 @@ public class SplashScreen extends AppCompatActivity {
 // finally change the color
         window.setStatusBarColor(ContextCompat.getColor(this,R.color.main));
         coupons = new ArrayList<>();
-        createNotificationChannel();
     }
 
     @Override
@@ -89,8 +88,7 @@ public class SplashScreen extends AppCompatActivity {
                     db.couponsDAO().delete(coupon);
                 }else{
                     coupons.add(coupon);
-                    Notification notif = getNotification(coupon);
-                    scheduleNotification(notif, strDate);
+
                 }
             }
 
@@ -113,61 +111,6 @@ public class SplashScreen extends AppCompatActivity {
     }
 
 
-    public void scheduleNotification (Notification notification , Date date) {
-        Intent notificationIntent = new Intent( this, NotificationPublisher. class ) ;
-        notificationIntent.putExtra(NotificationPublisher. NOTIFICATION_ID , 1 ) ;
-        notificationIntent.putExtra(NotificationPublisher. NOTIFICATION , notification) ;
-        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
-
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context. ALARM_SERVICE ) ;
-        assert alarmManager != null;
-
-        int h1 = 3600 * 1000;
-        int h6 = h1 *6;
-        int h12 = h1 * 12;
-        int h24 = h1 *24;
-
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-1000, pendingIntent);
-
-        /*alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h1, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h6, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h12, pendingIntent) ;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , date.getTime()-h24, pendingIntent) ;*/
-    }
-    public Notification getNotification (Coupon coupon) {
-        Intent intent = new Intent(this, SplashScreen.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        String content = "Le coupon "+coupon.getCode()+" arrive bientôt à expiration, alors profitez en !";
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Un coupon arrive bientôt à expiration")
-                .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-        return builder.build() ;
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "gostyle-notif";
-            String description = "Desc du channel";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
 
 
 
