@@ -23,14 +23,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.DecodeCallback;
-import com.example.codescannergostyle.CouponNotification;
+import com.example.codescannergostyle.notifications.CouponNotification;
 import com.example.codescannergostyle.database.*;
 import com.example.codescannergostyle.util.*;
 import com.example.codescannergostyle.NavActivity;
 import com.example.codescannergostyle.R;
 import com.google.zxing.Result;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

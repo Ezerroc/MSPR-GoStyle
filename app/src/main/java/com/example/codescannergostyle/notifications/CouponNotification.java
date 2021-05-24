@@ -1,4 +1,4 @@
-package com.example.codescannergostyle;
+package com.example.codescannergostyle.notifications;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -8,10 +8,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.codescannergostyle.R;
+import com.example.codescannergostyle.SplashScreen;
 import com.example.codescannergostyle.util.Coupon;
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.example.codescannergostyle;
+package com.example.codescannergostyle.notifications;
 
 import android.app.AlarmManager;
 import android.app.Notification;
