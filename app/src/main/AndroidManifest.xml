@@ -3,7 +3,10 @@
     package="com.example.codescannergostyle">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name = "android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -11,14 +14,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CodeScannerGoStyle">
-        <activity android:name=".MainActivity">
+        android:theme="@style/Theme.CodeScannerGoStyle"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".NavActivity"
+            android:label="@string/title_activity_nav">
+
+        </activity>
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name= ".NotificationPublisher" />
     </application>
 
 </manifest>
