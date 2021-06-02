@@ -65,6 +65,22 @@ public class Coupon implements Serializable {
         this.date_upd = date_upd;
     }
 
+    public Coupon() {
+        this.ID = 0;
+        this.date_from = null;
+        this.date_to = null;
+        this.description = null;
+        this.code = null;
+        this.minimum_amount = 0;
+        this.minimum_amount_tax = 0;
+        this.minimum_amount_shipping = 0;
+        this.reduction_percent = 0;
+        this.reduction_amount = 0;
+        this.active = 0;
+        this.date_add = null;
+        this.date_upd = null;
+    }
+
     public int getID() {
         return ID;
     }

@@ -44,10 +44,6 @@ public class SplashScreen extends AppCompatActivity {
 
 
 
-    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
-    private final static String default_notification_channel_id = "default" ;
-    final Calendar myCalendar = Calendar. getInstance () ;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +69,6 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void verifyDB() throws JSONException, ParseException {
-        //Create or Open Database and check if user is connected
-
         AppDatabase db = AppDatabase.getInstance(SplashScreen.this);
 
         int size = db.couponsDAO().getAll().size();
@@ -88,7 +82,6 @@ public class SplashScreen extends AppCompatActivity {
                     db.couponsDAO().delete(coupon);
                 }else{
                     coupons.add(coupon);
-
                 }
             }
 

@@ -160,20 +160,16 @@ public class ScannerFragment extends Fragment {
                                 e.printStackTrace();
                             }
                         }
-                        //Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Il semblerait qu'il y ait eu une erreur, veuillez rééssayer plus tard.", Toast.LENGTH_LONG).show();
             }
         });
 
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
-
-
     }
 
     private boolean couponInvalide(Coupon coupon) throws ParseException {
